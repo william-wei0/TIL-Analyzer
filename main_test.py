@@ -22,7 +22,7 @@ from lifelines.statistics import logrank_test
 
 import nnet_survival_pytorch
 
-from model import DifferentResNet186, Identity, DifferentResNet187, GoodUmapandGraph
+from model import DifferentResNet186, Identity, GoodUmapandGraph
 from CustomTransformations import ImageTransformations
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -611,16 +611,6 @@ def main():
         models[i].load_state_dict(torch.load(save_model_filepath[i], weights_only=True))
         models[i].to(device)
         models[i].eval()
-
-    # for model in models:
-    #      model.fc = Identity()
-    #      model.sigmoid1 = Identity()
-    #      model.batch_norm = Identity()
-    #      model.dropout = Identity()
-    #      model.survival = Identity()
-    #      model.sigmoid2 = Identity()
-
-    # print(model)
 
     for model in models:
         generate_survival_graph_noKMF(l_data_loader, m_data_loader, h_data_loader, model)

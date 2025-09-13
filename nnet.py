@@ -18,7 +18,7 @@ import csv
 import os
 from PIL import Image
 import pandas as pd
-from model import DifferentResNet186, Identity, Resnet502, GoodUmapandGraph
+from model import DifferentResNet186
 from CustomTransformations import ImageTransformations
 from main_test import test_on_chip
 
