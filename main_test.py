@@ -198,7 +198,7 @@ def generate_survival_graph_noKMF(low_dataloader, med_dataloader, high_dataloade
     plt.plot(breaks, med_average,'b-', label=label, alpha=1.0)
     plt.plot(breaks, high_average,'g-', label=label, alpha=1.0)
     
-    print("Calculating Log Rank Test - P-values")
+    print("Calculating Z-test of two proportions - P-values")
     p_value_categories = ["0.5_CAF-1.0_CAF_median", "0.0_CAF-0.5_CAF_median", "0.0_CAF-1.0_CAF_median",
                           "0.5_CAF-1.0_CAF_average", "0.0_CAF-0.5_CAF_average", "0.0_CAF-1.0_CAF_average"]
 
