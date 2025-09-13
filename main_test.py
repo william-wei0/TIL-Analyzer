@@ -242,7 +242,7 @@ def generate_survival_graph_noKMF(low_dataloader, med_dataloader, high_dataloade
     for j in range(len(average_list)):
         save_results(pd.DataFrame(np.append(average_list[j], str(j/2.0) + " e6 CAF")).transpose(), excel_filepath)
 
-    save_results(["Log Rank Test P-values"] ,excel_filepath)
+    save_results(["Z-test of two proportions p-values"] ,excel_filepath)
 
     save_results(["Medians"] ,excel_filepath)
     for k in range(3):
