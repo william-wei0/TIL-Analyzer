@@ -24,20 +24,20 @@ This project implements a neural network-based survival analysis model that pred
 
 ## Data Source and Image Preprocessing
 
-1. ### Download the TCGA-PAAD Dataset
+### 1. Download the TCGA-PAAD Dataset
 
 The H&E images used in this project was sourced from **The Cancer Genome Atlas Pancreatic Adenocarcinoma (TCGA-PAAD)** project, a comprehensive dataset maintained by the National Cancer Institute's Genomic Data Commons (NCI GDC).
 
 TCGA-PAAD data can be accessed through the **NCI Genomic Data Commons (GDC) Data Portal**:
 **Portal URL**: https://portal.gdc.cancer.gov/projects/TCGA-PAAD
 
-2. ### Image Processing of H&E Bicolor Maps to Red-Blue Bicolor Maps
+### 2. Image Processing of H&E Bicolor Maps to Red-Blue Bicolor Maps
 
 To improve the learning of TIL infiltration patterns, the H&E images are reduced to a red-blue bi-color map using the deep-learning model designed by Saltz et al. (2018).
 
 To convert the H&E images obtained from the National Cancer Institute's Genomic Data Commons (NCI GDC), download the pretrained model from [https://github.com/SBU-BMI/u24_lymphocyte](https://github.com/SBU-BMI/u24_lymphocyte) and follow the instructions to convert the H&E images to red-blue bicolor maps.
 
-3. ### Annotations CSV Structure
+### 3. Annotations CSV Structure
 To associate the PAAD H&E images to each patients survival, an annotations CSV is used. 
 Each annotation CSV file should contain:
 - Column 0: File path to red-blue bicolor TIL map 
@@ -131,25 +131,6 @@ The project generates several types of output:
    - K-means clustering plots (`.png`)
    - Elbow method plots (`.png`)
 
-## Requirements
-
-```
-torch
-torchvision
-lifelines
-scikit-learn
-matplotlib
-numpy
-pandas
-Pillow
-umap-learn
-opencv-python
-...
-```
-
-Check ```requirements.txt``` for more information.
-
-
 ## Contact
 
 For questions about the survival analysis methodology, please contact:
@@ -172,7 +153,10 @@ https://doi.org/10.7717/peerj.6257
 
 **The Deep Learning-based Red-Blue Bicolor Map Transformer**
 ```
-Saltz, J., Gupta, R., Hou, L., Kurc, T., Singh, P., Nguyen, V., … Thorsson, V. (2018). Spatial Organization and Molecular Correlation of Tumor-Infiltrating Lymphocytes Using Deep Learning on Pathology Images. Cell Reports, 23(1), 181-193.e7. doi:10.1016/j.celrep.2018.03.086
+Saltz, J., Gupta, R., Hou, L., Kurc, T., Singh, P., Nguyen, V., … Thorsson, V. (2018). 
+Spatial Organization and Molecular Correlation of Tumor-Infiltrating Lymphocytes Using Deep Learning on Pathology Images. 
+Cell Reports, 23(1), 181-193.e7. 
+doi:10.1016/j.celrep.2018.03.086
 ```
 
 **Primary TCGA-PAAD Study**:
