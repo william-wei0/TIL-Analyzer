@@ -4,40 +4,7 @@ A deep learning framework for survival analysis using medical imaging data, impl
 
 ## Overview
 
-This project implements a neural network-based survival analysis model that predicts patient survival probabilities from medical images. The model uses a modified ResNet-18 architecture with custom survival prediction heads and includes comprehensive tools for model evaluation, visualization, and statistical analysis.
-
-## Features
-
-- **Custom Survival Model**: A ResNet-18-based architecture with configurable intermediate layers
-- **Survival Analysis**: Discrete-time survival modeling with custom loss functions
-- **Comprehensive Evaluation**: 
-  - Concordance index (C-index) calculation at multiple time points (1, 2, 2.5, and 3 years)
-  - Kaplan-Meier survival curve generation
-  - Log-rank statistical testing between groups
-- **Dimensionality Reduction**: UMAP visualization of learned feature representations
-- **K-means Clustering**: Automated clustering analysis with elbow method visualization
-- **Class Weighting**: Adaptive sample weighting based on image quality and class imbalance
-
-## Requirements
-
-```
-torch
-torchvision
-lifelines
-scikit-learn
-matplotlib
-numpy
-pandas
-Pillow
-umap-learn
-opencv-python
-```
-
-## Installation
-
-```bash
-pip install torch torchvision lifelines scikit-learn matplotlib numpy pandas Pillow umap-learn opencv-python
-```
+This project implements a neural network-based survival analysis model that predicts patient survival probabilities from the infiltration patterns of the tumor infiltrating lymphocytes (TILs) in hematoxylin and eosin (H&E) slides of pancreatic adenocarcinoma. The model uses a modified ResNet-18 architecture with custom survival prediction heads and includes comprehensive tools for model evaluation, visualization, and statistical analysis.
 
 ## Project Structure
 
@@ -55,13 +22,28 @@ pip install torch torchvision lifelines scikit-learn matplotlib numpy pandas Pil
     └── annotations_chip_low_surv.csv
 ```
 
-## Data Format
+## Data Source and Image Preprocessing
 
-### Annotations CSV Structure
-Each CSV file should contain:
-- Column 0: Image file path
+1. ### Download the TCGA-PAAD Dataset
+
+The H&E images used in this project was sourced from **The Cancer Genome Atlas Pancreatic Adenocarcinoma (TCGA-PAAD)** project, a comprehensive dataset maintained by the National Cancer Institute's Genomic Data Commons (NCI GDC).
+
+TCGA-PAAD data can be accessed through the **NCI Genomic Data Commons (GDC) Data Portal**:
+**Portal URL**: https://portal.gdc.cancer.gov/projects/TCGA-PAAD
+
+2. ### Image Processing of H&E Bicolor Maps to Red-Blue Bicolor Maps
+
+To improve the learning of TIL infiltration patterns, the H&E images are reduced to a red-blue bi-color map using the deep-learning model designed by Saltz et al. (2018).
+
+To convert the H&E images obtained from the National Cancer Institute's Genomic Data Commons (NCI GDC), download the pretrained model from [https://github.com/SBU-BMI/u24_lymphocyte](https://github.com/SBU-BMI/u24_lymphocyte) and follow the instructions to convert the H&E images to red-blue bicolor maps.
+
+3. ### Annotations CSV Structure
+To associate the PAAD H&E images to each patients survival, an annotations CSV is used. 
+Each annotation CSV file should contain:
+- Column 0: File path to red-blue bicolor TIL map 
 - Column 1: Survival time (in days)
 - Column 2: Event indicator (0 = censored/alive, 1 = death occurred)
+
 
 ## Usage
 
@@ -96,11 +78,6 @@ This will:
 - Base: ResNet-18 (pretrained)
 - FC1: 512 → 256 (configurable)
 - FC2: 256 → 256 (configurable)
-- Output: Survival predictions for each time interval
-
-### GoodUmapandGraph
-- Base: ResNet-18 (pretrained)
-- FC: 512 → 512 (configurable)
 - Output: Survival predictions for each time interval
 
 Both models include:
@@ -154,34 +131,24 @@ The project generates several types of output:
    - K-means clustering plots (`.png`)
    - Elbow method plots (`.png`)
 
-## Reproducibility
+## Requirements
 
-The code includes random seed initialization for reproducibility:
-```python
-random.seed(1)
-torch.manual_seed(1)
-torch.cuda.manual_seed(1)
-np.random.seed(1)
-torch.backends.cudnn.deterministic = True
+```
+torch
+torchvision
+lifelines
+scikit-learn
+matplotlib
+numpy
+pandas
+Pillow
+umap-learn
+opencv-python
+...
 ```
 
-## Learning Rate Scheduling
+Check ```requirements.txt``` for more information.
 
-The model uses `ReduceLROnPlateau` scheduler with:
-- Mode: minimize loss
-- Factor: 0.4
-- Patience: 15 epochs
-- Threshold: 2.0
-
-
-### Additional Tools & Libraries
-
-This project also utilizes:
-- **PyTorch**: Deep learning framework
-- **torchvision**: Pre-trained ResNet models
-- **lifelines**: Kaplan-Meier fitting and concordance index calculation
-- **UMAP**: Dimensionality reduction for feature visualization
-- **scikit-learn**: K-means clustering
 
 ## Contact
 
@@ -195,9 +162,39 @@ For questions about this specific implementation, please open an issue in the re
 
 ## Acknowledgements & Citations
 
+**The implementation of the suvival loss function**:
 ```
 Gensheimer, M. F., & Narasimhan, B. (2019). 
 A scalable discrete-time survival model for neural networks. 
 PeerJ, 7, e6257. 
 https://doi.org/10.7717/peerj.6257
+```
+
+**The Deep Learning-based Red-Blue Bicolor Map Transformer**
+```
+Saltz, J., Gupta, R., Hou, L., Kurc, T., Singh, P., Nguyen, V., … Thorsson, V. (2018). Spatial Organization and Molecular Correlation of Tumor-Infiltrating Lymphocytes Using Deep Learning on Pathology Images. Cell Reports, 23(1), 181-193.e7. doi:10.1016/j.celrep.2018.03.086
+```
+
+**Primary TCGA-PAAD Study**:
+```
+Cancer Genome Atlas Research Network. (2017).
+Integrated Genomic Characterization of Pancreatic Ductal Adenocarcinoma.
+Cancer Cell, 32(2), 185-203.e13.
+https://doi.org/10.1016/j.ccell.2017.07.007
+```
+
+**TCGA Pan-Cancer Clinical Data**:
+```
+Liu, J., Lichtenberg, T., Hoadley, K. A., et al. (2018).
+An Integrated TCGA Pan-Cancer Clinical Data Resource to Drive High-Quality Survival Outcome Analytics.
+Cell, 173(2), 400-416.e11.
+https://doi.org/10.1016/j.cell.2018.02.052
+```
+
+**Data Curation Considerations**:
+```
+Collisson, E. A., Bailey, P., Chang, D. K., & Biankin, A. V. (2019).
+Molecular subtypes of pancreatic cancer.
+Nature Reviews Gastroenterology & Hepatology, 16(4), 207-220.
+https://doi.org/10.1038/s41575-019-0109-y
 ```
