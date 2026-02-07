@@ -15,8 +15,10 @@ def generate_annotations(image_dir, data_filepath):
             death_occurred = True if lines[5] == "Dead" else False
 
             if lines[4] != "'--": 
+                # lines[4] = days_to_death (Column E) 
                 survival_time = int(lines[4])
             else:
+                # lines[40] = days_to_last_follow_up (Column AO)
                 survival_time = int(lines[40])
 
             
