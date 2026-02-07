@@ -50,10 +50,10 @@ Each annotation CSV file should contain:
 ### Training a Model
 
 ```python
-python main.py
+python nnet.py
 ```
 
-Training parameters can be configured in `main.py`:
+Training parameters can be configured in `nnet.py`:
 - `training_split`: Train/validation split ratio (default: 175/216)
 - `batch_size`: Batch size for training (default: 16)
 - `epochs`: Number of training epochs (default: 400)
@@ -72,15 +72,13 @@ This will:
 4. Perform K-means clustering analysis
 5. Calculate statistical significance using log-rank tests
 
-## Model Architectures
-
-### DifferentResNet186
+## Model Architecture
 - Base: ResNet-18 (pretrained)
 - FC1: 512 → 256 (configurable)
 - FC2: 256 → 256 (configurable)
 - Output: Survival predictions for each time interval
 
-Both models include:
+Regularization Methods:
 - Sigmoid activations
 - Batch normalization
 - Dropout regularization (default: 0.5)
